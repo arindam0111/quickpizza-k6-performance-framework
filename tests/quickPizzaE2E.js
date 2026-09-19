@@ -18,6 +18,7 @@ import {
     deleteRating
 } from '../api/ratingApi.js';
 import { getAuthHeaders } from '../utils/request.js';
+import { loadProfile } from '../config/loadProfile.js';
 
 
 // ===============================
@@ -25,13 +26,7 @@ import { getAuthHeaders } from '../utils/request.js';
 // ===============================
 
 export const options = {
-    stages: [
-        { duration: '30s', target: 5 },
-        { duration: '1m', target: 10 },
-        { duration: '2m', target: 15 },
-        { duration: '1m', target: 10 },
-        { duration: '30s', target: 0 }
-    ],
+    stages: loadProfile,
 
     thresholds: {
         // Global HTTP performance
