@@ -11,6 +11,15 @@ import {
     registerUser,
     loginUser
 } from '../api/userApi.js';
+import {
+    createRating,
+    getRating,
+    listRatings,
+    deleteRating
+} from '../api/ratingApi.js';
+
+
+
 // ===============================
 // Test Options
 // ===============================
@@ -219,15 +228,10 @@ export default function (data) {
             pizza_id: 1
         });
 
-        createOrderResponse = http.post(
-            `${baseUrl}/api/ratings`,
-            orderPayload,
-            {
-                headers: authHeaders,
-                tags: {
-                    name: 'create_order'
-                }
-            }
+        createOrderResponse = createRating(
+            baseUrl,
+            authHeaders,
+            orderPayload
         );
         
         if (createOrderResponse.status !== 201) {
@@ -262,14 +266,10 @@ export default function (data) {
         // Get Order / Rating
         // --------------------------------------
 
-        const getOrderResponse = http.get(
-            `${baseUrl}/api/ratings/${orderId}`,
-            {
-                headers: authHeaders,
-                tags: {
-                    name: 'get_order'
-                }
-            }
+        const getOrderResponse = getRating(
+            baseUrl,
+            authHeaders,
+            orderId
         );
 
         check(getOrderResponse, {
@@ -294,15 +294,10 @@ export default function (data) {
         // --------------------------------------
         // List Orders / Ratings
         // --------------------------------------
-
-        const listOrdersResponse = http.get(
-            `${baseUrl}/api/ratings`,
-            {
-                headers: authHeaders,
-                tags: {
-                    name: 'list_orders'
-                }
-            }
+        
+        const listOrdersResponse = listRatings(
+            baseUrl,
+            authHeaders
         );
 
         check(listOrdersResponse, {
@@ -363,15 +358,10 @@ export default function (data) {
     // ==========================================
 
     group('Cleanup', function () {
-        const deleteOrderResponse = http.del(
-            `${baseUrl}/api/ratings/${orderId}`,
-            null,
-            {
-                headers: authHeaders,
-                tags: {
-                    name: 'delete_order'
-                }
-            }
+        const deleteOrderResponse = deleteRating(
+            baseUrl,
+            authHeaders,
+            orderId
         );
     
     
