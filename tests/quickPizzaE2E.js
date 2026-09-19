@@ -1,16 +1,12 @@
 import http from 'k6/http';
 import { check, sleep, group } from 'k6';
-import { Counter, Trend, Rate } from 'k6/metrics';
+import {
+    transactionTime,
+    successfulOrders,
+    loginSuccessRate
+} from '../utils/metrics.js';
 import { BASE_URL, PASSWORD } from '../config/env.js';
 import { randomString } from '../utils/helpers.js';
-
-// ===============================
-// Custom Metrics
-// ===============================
-
-const transactionTime = new Trend('transaction_time');
-const successfulOrders = new Counter('successful_orders');
-const loginSuccessRate = new Rate('login_success_rate');
 
 // ===============================
 // Test Options
