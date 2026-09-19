@@ -17,7 +17,7 @@ import {
     listRatings,
     deleteRating
 } from '../api/ratingApi.js';
-
+import { getAuthHeaders } from '../utils/request.js';
 
 
 // ===============================
@@ -202,15 +202,6 @@ export default function (data) {
     }
 
     // ==========================================
-    // Authentication Headers
-    // ==========================================
-
-    const authHeaders = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authToken}`
-    };
-
-    // ==========================================
     // 3. Order Management
     // ==========================================
 
@@ -230,7 +221,7 @@ export default function (data) {
 
         createOrderResponse = createRating(
             baseUrl,
-            authHeaders,
+            authToken,
             orderPayload
         );
         
@@ -268,7 +259,7 @@ export default function (data) {
 
         const getOrderResponse = getRating(
             baseUrl,
-            authHeaders,
+            authToken,
             orderId
         );
 
@@ -297,7 +288,7 @@ export default function (data) {
         
         const listOrdersResponse = listRatings(
             baseUrl,
-            authHeaders
+            authToken
         );
 
         check(listOrdersResponse, {
@@ -328,7 +319,7 @@ export default function (data) {
         verificationResponse = http.get(
             `${baseUrl}/api/ratings/${orderId}`,
             {
-                headers: authHeaders,
+                headers: getAuthHeaders(authToken),
                 tags: {
                     name: 'verify_order'
                 }
@@ -360,7 +351,7 @@ export default function (data) {
     group('Cleanup', function () {
         const deleteOrderResponse = deleteRating(
             baseUrl,
-            authHeaders,
+            authToken,
             orderId
         );
     

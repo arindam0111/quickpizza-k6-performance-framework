@@ -3,7 +3,7 @@
 // ===============================
 
 import http from 'k6/http';
-
+import { getJsonHeaders } from '../utils/request.js';
 export function registerUser(baseUrl, username, password) {
 
     const payload = JSON.stringify({
@@ -15,9 +15,7 @@ export function registerUser(baseUrl, username, password) {
         `${baseUrl}/api/users`,
         payload,
         {
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getJsonHeaders(),
             tags: {
                 name: 'register'
             }
@@ -36,9 +34,7 @@ export function loginUser(baseUrl, username, password) {
         `${baseUrl}/api/users/token/login`,
         payload,
         {
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getJsonHeaders(),
             tags: {
                 name: 'login'
             }

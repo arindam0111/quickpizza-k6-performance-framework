@@ -3,27 +3,27 @@
 // ===============================
 
 import http from 'k6/http';
+import { getAuthHeaders } from '../utils/request.js';
 
-export function createRating(baseUrl, authHeaders, ratingPayload) {
-
+export function createRating(baseUrl, authToken, ratingPayload) {
     return http.post(
         `${baseUrl}/api/ratings`,
         ratingPayload,
         {
-            headers: authHeaders,
+            headers: getAuthHeaders(authToken),
             tags: {
                 name: 'create_order'
             }
         }
     );
-}
-
-export function getRating(baseUrl, authHeaders, ratingId) {
+    }
+    
+    export function getRating(baseUrl, authToken, ratingId) {
 
     return http.get(
         `${baseUrl}/api/ratings/${ratingId}`,
         {
-            headers: authHeaders,
+            headers: getAuthHeaders(authToken),
             tags: {
                 name: 'get_order'
             }
@@ -31,12 +31,12 @@ export function getRating(baseUrl, authHeaders, ratingId) {
     );
 }
 
-export function listRatings(baseUrl, authHeaders) {
+export function listRatings(baseUrl, authToken) {
 
     return http.get(
         `${baseUrl}/api/ratings`,
         {
-            headers: authHeaders,
+            headers: getAuthHeaders(authToken),
             tags: {
                 name: 'list_orders'
             }
@@ -44,13 +44,13 @@ export function listRatings(baseUrl, authHeaders) {
     );
 }
 
-export function deleteRating(baseUrl, authHeaders, ratingId) {
+export function deleteRating(baseUrl, authToken, ratingId) {
 
     return http.del(
         `${baseUrl}/api/ratings/${ratingId}`,
         null,
         {
-            headers: authHeaders,
+            headers: getAuthHeaders(authToken),
             tags: {
                 name: 'delete_order'
             }
