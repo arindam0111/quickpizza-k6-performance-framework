@@ -2,6 +2,7 @@ import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { Counter, Trend, Rate } from 'k6/metrics';
 import { BASE_URL, PASSWORD } from '../config/env.js';
+import { randomString } from '../utils/helpers.js';
 
 // ===============================
 // Custom Metrics
@@ -81,25 +82,6 @@ export function setup() {
         testStartTime: testStartTime,
         baseUrl: BASE_URL
     };
-}
-
-// ===============================
-// Utility
-// ===============================
-
-function randomString(length) {
-    const characters =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    let result = '';
-
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(
-            Math.floor(Math.random() * characters.length)
-        );
-    }
-
-    return result;
 }
 
 // ===============================
