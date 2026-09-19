@@ -1,13 +1,7 @@
 import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { Counter, Trend, Rate } from 'k6/metrics';
-
-// ===============================
-// Configuration
-// ===============================
-
-const BASE_URL = 'https://quickpizza.grafana.com';
-const PASSWORD = 'securepassword123';
+import { BASE_URL, PASSWORD } from '../config/env.js';
 
 // ===============================
 // Custom Metrics
