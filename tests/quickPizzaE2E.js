@@ -7,7 +7,10 @@ import {
 } from '../utils/metrics.js';
 import { BASE_URL, PASSWORD } from '../config/env.js';
 import { randomString } from '../utils/helpers.js';
-
+import {
+    registerUser,
+    loginUser
+} from '../api/userApi.js';
 // ===============================
 // Test Options
 // ===============================
@@ -106,17 +109,10 @@ export default function (data) {
             password: PASSWORD
         });
 
-        registrationResponse = http.post(
-            `${baseUrl}/api/users`,
-            registrationPayload,
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                tags: {
-                    name: 'register'
-                }
-            }
+        registrationResponse = registerUser(
+            baseUrl,
+            username,
+            PASSWORD
         );
 
         check(registrationResponse, {
@@ -151,17 +147,10 @@ export default function (data) {
             password: PASSWORD
         });
 
-        loginResponse = http.post(
-            `${baseUrl}/api/users/token/login`,
-            loginPayload,
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                tags: {
-                    name: 'login'
-                }
-            }
+        loginResponse = loginUser(
+            baseUrl,
+            username,
+            PASSWORD
         );
 
         const loginSuccessful =
