@@ -353,8 +353,9 @@ export default function (data) {
     const transactionDuration =
         Date.now() - transactionStart;
 
-    transactionTime.add(transactionDuration);
-
+        transactionTime.add(transactionDuration, {
+            scenario: selectedScenario
+        });
     successfulOrders.add(1);
 }
 
