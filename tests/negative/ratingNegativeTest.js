@@ -5,8 +5,7 @@
 import http from 'k6/http';
 import { BASE_URL, PASSWORD } from '../../config/env.js';
 import { registerUser, loginUser } from '../../api/userApi.js';
-import { getRating } from '../../api/ratingApi.js';
-import { randomString } from '../../utils/helpers.js';
+import { getRating, createRating } from '../../api/ratingApi.js';import { randomString } from '../../utils/helpers.js';
 import { negativeThresholds } from '../../config/negativeThresholds.js';
 import { check, group } from 'k6';
 
@@ -79,6 +78,23 @@ export default function () {
     
         check(authResponse, {
             'Invalid token returns 401': (res) => res.status === 401
+        });
+    });
+
+    group('Invalid Rating Data', function () {
+        const invalidRatingPayload = JSON.stringify({
+            stars: 999,
+            pizza_id: -1
+        });
+    
+        const response = createRating(
+            BASE_URL,
+            authToken,
+            invalidRatingPayload
+        );
+    
+        check(response, {
+            'Invalid rating data returns 400': (res) => res.status === 400
         });
     });
 }
