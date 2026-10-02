@@ -3,7 +3,8 @@ import { check, sleep, group } from 'k6';
 import {
     transactionTime,
     successfulOrders,
-    loginSuccessRate
+    loginSuccessRate,
+    scenarioExecutions
 } from '../utils/metrics.js';
 import { BASE_URL, PASSWORD } from '../config/env.js';
 import { randomString } from '../utils/helpers.js';
@@ -79,6 +80,10 @@ export function setup() {
 // ===============================
 
 export default function (data) {
+    scenarioExecutions.add(1, {
+        scenario: selectedScenario
+    });
+
 
     const baseUrl = data.baseUrl;
 

@@ -7,3 +7,4 @@ import { Counter, Trend, Rate } from 'k6/metrics';
 export const transactionTime = new Trend('transaction_time');
 export const successfulOrders = new Counter('successful_orders');
 export const loginSuccessRate = new Rate('login_success_rate');
+export const scenarioExecutions = new Counter('scenario_executions');
