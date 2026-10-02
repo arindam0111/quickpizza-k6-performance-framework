@@ -18,7 +18,7 @@ import {
     deleteRating
 } from '../api/ratingApi.js';
 import { getAuthHeaders } from '../utils/request.js';
-import { loadProfile } from '../config/loadProfile.js';
+import { scenarios } from '../config/scenarios.js';
 
 
 // ===============================
@@ -26,7 +26,7 @@ import { loadProfile } from '../config/loadProfile.js';
 // ===============================
 
 export const options = {
-    stages: loadProfile,
+    scenarios: scenarios,
 
     thresholds: {
         // Global HTTP performance
