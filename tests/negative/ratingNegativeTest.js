@@ -8,6 +8,7 @@ import { registerUser, loginUser } from '../../api/userApi.js';
 import { getRating, createRating } from '../../api/ratingApi.js';import { randomString } from '../../utils/helpers.js';
 import { negativeThresholds } from '../../config/negativeThresholds.js';
 import { check, group } from 'k6';
+import { negativeRatingData } from '../../data/testData.js';
 
 export const options = {
     scenarios: {
@@ -53,7 +54,7 @@ export default function () {
     // Request invalid rating ID
     group('Invalid Rating ID', function () {
 
-        const invalidRatingId = 999999;
+        const invalidRatingId = negativeRatingData.invalidRatingId;
     
         const response = getRating(
             BASE_URL,
@@ -68,8 +69,8 @@ export default function () {
      // Request with invalid authentication token
     group('Invalid Authentication', function () {
     
-        const invalidToken = 'invalid_token_12345';
-    
+        const invalidToken = negativeRatingData.invalidToken;
+
         const authResponse = getRating(
             BASE_URL,
             invalidToken,
@@ -82,10 +83,9 @@ export default function () {
     });
 
     group('Invalid Rating Data', function () {
-        const invalidRatingPayload = JSON.stringify({
-            stars: 999,
-            pizza_id: -1
-        });
+        const invalidRatingPayload = JSON.stringify(
+    negativeRatingData.invalidRatingPayload
+);
     
         const response = createRating(
             BASE_URL,
