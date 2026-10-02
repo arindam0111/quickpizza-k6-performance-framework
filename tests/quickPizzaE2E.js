@@ -27,6 +27,16 @@ import { scenarios } from '../config/scenarios.js';
 
 const selectedScenario = __ENV.TEST_SCENARIO || 'load_test';
 
+if (
+    selectedScenario !== 'smoke_test' &&
+    selectedScenario !== 'load_test'
+) {
+    throw new Error(
+        `Invalid TEST_SCENARIO: "${selectedScenario}". ` +
+        `Allowed values: smoke_test, load_test`
+    );
+}
+
 let selectedScenarios = {
     load_test: scenarios.load_test
 };
