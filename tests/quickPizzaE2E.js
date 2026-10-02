@@ -20,7 +20,7 @@ import {
 import { getAuthHeaders } from '../utils/request.js';
 import { scenarios } from '../config/scenarios.js';
 import { thresholds } from '../config/thresholds.js';
-
+import { ratingData } from '../data/testData.js';
 
 // ===============================
 // Test Options
@@ -196,10 +196,7 @@ export default function (data) {
         // Create Order / Rating
         // --------------------------------------
 
-        const orderPayload = JSON.stringify({
-            stars: 5,
-            pizza_id: 1
-        });
+        const orderPayload = JSON.stringify(ratingData);
 
         createOrderResponse = createRating(
             baseUrl,
