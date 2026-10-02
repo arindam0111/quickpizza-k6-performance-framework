@@ -25,8 +25,20 @@ import { scenarios } from '../config/scenarios.js';
 // Test Options
 // ===============================
 
+const selectedScenario = __ENV.TEST_SCENARIO || 'load_test';
+
+let selectedScenarios = {
+    load_test: scenarios.load_test
+};
+
+if (selectedScenario === 'smoke_test') {
+    selectedScenarios = {
+        smoke_test: scenarios.smoke_test
+    };
+}
+
 export const options = {
-    scenarios: scenarios,
+    scenarios: selectedScenarios,
 
     thresholds: {
         // Global HTTP performance
