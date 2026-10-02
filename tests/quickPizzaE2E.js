@@ -66,6 +66,7 @@ export function setup() {
     console.log('QuickPizza API Performance Test');
     console.log('==========================================');
     console.log(`Test Start Time : ${testStartTime}`);
+    console.log(`Execution Mode  : ${selectedScenario}`);
     console.log(`Base URL        : ${BASE_URL}`);
     console.log('==========================================');
 
