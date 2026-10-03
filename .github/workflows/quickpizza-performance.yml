@@ -32,3 +32,10 @@ jobs:
           k6 run --insecure-skip-tls-verify --out json=reports/smoke/ci-smoke-result.json tests/quickPizzaE2E.js
         env:
           TEST_SCENARIO: smoke_test
+        continue-on-error: true
+
+      - name: Upload k6 smoke report
+        uses: actions/upload-artifact@v4
+        with:
+          name: quickpizza-smoke-report
+          path: reports/smoke/ci-smoke-result.json
