@@ -1,4 +1,3 @@
-```yaml
 name: QuickPizza Performance Tests
 
 on:
@@ -54,4 +53,3 @@ jobs:
         with:
           name: quickpizza-smoke-report
           path: reports/smoke/ci-smoke-result.json
-```
