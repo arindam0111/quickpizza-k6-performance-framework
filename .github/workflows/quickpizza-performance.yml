@@ -29,6 +29,7 @@ jobs:
 
       - name: Run QuickPizza smoke test
         run: |
+          mkdir -p reports/smoke
           k6 run --insecure-skip-tls-verify --out json=reports/smoke/ci-smoke-result.json tests/quickPizzaE2E.js
         env:
           TEST_SCENARIO: smoke_test
