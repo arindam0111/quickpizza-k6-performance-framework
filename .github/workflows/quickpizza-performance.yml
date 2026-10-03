@@ -1,3 +1,4 @@
+```yaml
 name: QuickPizza Performance Tests
 
 on:
@@ -44,8 +45,13 @@ jobs:
           echo "Checking JSON report..."
           test -f reports/smoke/ci-smoke-result.json
 
+      - name: Analyze smoke test report
+        run: |
+          node analyzer/analyzeReport.js reports/smoke/ci-smoke-result.json
+
       - name: Upload k6 smoke report
         uses: actions/upload-artifact@v4
         with:
           name: quickpizza-smoke-report
           path: reports/smoke/ci-smoke-result.json
+```
