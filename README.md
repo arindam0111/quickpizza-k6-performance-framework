@@ -4,13 +4,15 @@ A reusable **API performance testing framework** built with **Grafana k6 and Jav
 
 The project demonstrates practical performance-testing engineering concepts including **end-to-end API workflows, authentication, custom metrics, thresholds, configurable load profiles, negative API testing, reusable utilities, environment configuration, scenario-based execution, structured test organization, automated result analysis, baseline comparison, performance regression detection, and CI/CD quality gates**.
 
-> **Project status:** Iteration 25 completed.
+> **Project status:** **Framework Development Complete — Iteration 25.13 signed off.**
+
+> The framework has completed its planned development lifecycle, including automated performance analysis, version-controlled baseline comparison, regression detection, GitHub Actions CI/CD, and CI performance quality-gate validation.
 
 > This project is a hands-on learning and portfolio project focused on progressively building a maintainable k6 API performance-testing framework, from test execution and metrics collection through automated analysis, regression detection, and CI/CD validation.
 
 ---
 
-## 🚀 Key Features
+# 🚀 Key Features
 
 * k6 API performance testing
 * End-to-end API workflow
@@ -48,7 +50,7 @@ The project demonstrates practical performance-testing engineering concepts incl
 
 ---
 
-## 🛠️ Tech Stack
+# 🛠️ Tech Stack
 
 | Technology                      | Purpose                                  |
 | ------------------------------- | ---------------------------------------- |
@@ -63,7 +65,7 @@ The project demonstrates practical performance-testing engineering concepts incl
 
 ---
 
-## 📋 Project Overview
+# 📋 Project Overview
 
 The purpose of this project is to build a maintainable API performance-testing framework rather than a collection of standalone k6 scripts.
 
@@ -105,30 +107,29 @@ The framework progressively demonstrates:
                        k6 Execution
                               │
                               ▼
-                    Native JSON Result
+                     Native JSON Result
                               │
                               ▼
-                    analyzeReport.js
+                     analyzeReport.js
                               │
                               ▼
                        Summary JSON
                               │
                     ┌─────────┴─────────┐
                     ▼                   ▼
-              Thresholds          Baseline Summary
+               Thresholds        Baseline Summary
                     │                   │
                     └─────────┬─────────┘
                               ▼
                      compareReports.js
                               │
                               ▼
-                  Regression Detection
+                     Regression Detection
                               │
                        ┌──────┴──────┐
                        ▼             ▼
-                     PASS           FAIL
-                             
-                             
+                      PASS          FAIL
+
                     GitHub Actions CI
                               │
                               ▼
@@ -138,7 +139,7 @@ The framework progressively demonstrates:
                     Analyzer + Comparison
                               │
                               ▼
-                     Quality Gate
+                       Quality Gate
 ```
 
 ---
@@ -462,6 +463,7 @@ This keeps test data separate from test-flow logic and makes future data expansi
 
 ```powershell
 $env:TEST_SCENARIO="smoke_test"
+
 k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
 ```
 
@@ -469,6 +471,7 @@ k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
 
 ```powershell
 $env:TEST_SCENARIO="load_test"
+
 k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
 ```
 
@@ -593,7 +596,7 @@ The comparison evaluates:
 
 # 🚨 Performance Regression Detection
 
-The framework uses a **5% tolerance** for regression detection.
+The framework uses a **5% tolerance** for automated regression detection.
 
 ```text
 Version-Controlled Baseline
@@ -602,16 +605,16 @@ Version-Controlled Baseline
             ↓
       Metric Comparison
             ↓
-        5% Tolerance
+       5% Tolerance
             ↓
     ┌───────┴────────┐
     ↓                ↓
 No Regression     Regression
     ↓                ↓
-   PASS             FAIL
+   PASS              FAIL
 ```
 
-Comparison results classify metrics as:
+The comparison utility evaluates performance, reliability, endpoint and business metrics and classifies results as:
 
 * `IMPROVEMENT`
 * `REGRESSION`
@@ -619,7 +622,19 @@ Comparison results classify metrics as:
 * `NOT_COMPARABLE`
 * `NOT_AVAILABLE`
 
-The comparison utility returns a non-zero exit code when a regression is detected, allowing CI/CD to enforce the performance quality gate.
+### Automated Regression-Gate Metrics
+
+The CI regression gate focuses on relatively stable request-level and reliability measurements, including:
+
+* HTTP request duration
+* HTTP request failure rate
+* Check success rate
+* Login success rate
+* Endpoint-level performance metrics
+
+`transaction_time` and `iteration_duration` remain part of performance reporting and threshold validation but are **excluded from the automated baseline regression gate** because smoke execution provides very few samples and these end-to-end measurements can vary between individual runs.
+
+The comparison utility returns a non-zero exit code when a regression within the configured regression-gate metrics is detected, allowing CI/CD to enforce the performance quality gate.
 
 ---
 
@@ -704,6 +719,8 @@ PASS            FAIL
 │               │
 CI Continues    CI Fails
 ```
+
+The automated regression gate intentionally excludes `transaction_time` and `iteration_duration` because these end-to-end measurements are sensitive to the small sample size of smoke executions.
 
 ---
 
@@ -791,7 +808,7 @@ Validation includes:
 
 # 🧱 Framework Design Principles
 
-The framework follows several maintainability principles:
+The framework follows several maintainability principles.
 
 ### Separation of Concerns
 
@@ -825,70 +842,73 @@ Performance regression detection uses a deliberate, version-controlled baseline 
 
 # 📚 Development Iteration History
 
-| Iteration | Description                                                | Status |
-| --------- | ---------------------------------------------------------- | ------ |
-| 1         | Initialize k6 performance framework                        | ✅      |
-| 2         | Centralize environment configuration                       | ✅      |
-| 3         | Add reusable test data utilities                           | ✅      |
-| 4         | Centralize custom k6 metrics                               | ✅      |
-| 5         | Extract user API operations                                | ✅      |
-| 6         | Extract rating API operations                              | ✅      |
-| 7         | Centralize API request headers                             | ✅      |
-| 8         | Add configurable load profile                              | ✅      |
-| 9         | Add configurable performance scenarios                     | ✅      |
-| 10        | Add smoke test scenario                                    | ✅      |
-| 11        | Validate performance test scenario                         | ✅      |
-| 12        | Centralize performance thresholds                          | ✅      |
-| 13        | Centralize test data                                       | ✅      |
-| 14        | Add negative API scenarios                                 | ✅      |
-| 15        | Add scenario execution metrics                             | ✅      |
-| 16        | Add scenario tags to transaction metrics                   | ✅      |
-| 17        | Expand negative API coverage                               | ✅      |
-| 18        | Centralize negative test data                              | ✅      |
-| 19        | Externalize environment configuration                      | ✅      |
-| 20        | Framework validation and cleanup                           | ✅      |
-| 21        | Configure performance report storage                       | ✅      |
-| 22        | Add performance result analysis strategy                   | ✅      |
-| 23        | Add automated k6 report analyzer                           | ✅      |
-| 24        | Add performance result comparison and regression detection | ✅      |
-| 25        | Add GitHub Actions CI/CD and performance quality gate      | ✅      |
+| Iteration | Description                                                                        | Status |
+| --------- | ---------------------------------------------------------------------------------- | ------ |
+| 1         | Initialize k6 performance framework                                                | ✅      |
+| 2         | Centralize environment configuration                                               | ✅      |
+| 3         | Add reusable test data utilities                                                   | ✅      |
+| 4         | Centralize custom k6 metrics                                                       | ✅      |
+| 5         | Extract user API operations                                                        | ✅      |
+| 6         | Extract rating API operations                                                      | ✅      |
+| 7         | Centralize API request headers                                                     | ✅      |
+| 8         | Add configurable load profile                                                      | ✅      |
+| 9         | Add configurable performance scenarios                                             | ✅      |
+| 10        | Add smoke test scenario                                                            | ✅      |
+| 11        | Validate performance test scenario                                                 | ✅      |
+| 12        | Centralize performance thresholds                                                  | ✅      |
+| 13        | Centralize test data                                                               | ✅      |
+| 14        | Add negative API scenarios                                                         | ✅      |
+| 15        | Add scenario execution metrics                                                     | ✅      |
+| 16        | Add scenario tags to transaction metrics                                           | ✅      |
+| 17        | Expand negative API coverage                                                       | ✅      |
+| 18        | Centralize negative test data                                                      | ✅      |
+| 19        | Externalize environment configuration                                              | ✅      |
+| 20        | Framework validation and cleanup                                                   | ✅      |
+| 21        | Configure performance report storage                                               | ✅      |
+| 22        | Add performance result analysis strategy                                           | ✅      |
+| 23        | Add automated k6 report analyzer                                                   | ✅      |
+| 24        | Add performance result comparison and regression detection                         | ✅      |
+| 25        | Add GitHub Actions CI/CD and performance quality gate                              | ✅      |
+| 25.13     | Final validation, regression-gate refinement, CI validation and framework sign-off | ✅      |
 
 ---
 
 # 📌 Current Framework Status
 
-| Capability                            | Status |
-| ------------------------------------- | ------ |
-| k6 API Testing                        | ✅      |
-| QuickPizza E2E Workflow               | ✅      |
-| User Registration                     | ✅      |
-| Authentication                        | ✅      |
-| Rating API Operations                 | ✅      |
-| Negative API Testing                  | ✅      |
-| API Utilities                         | ✅      |
-| Centralized Configuration             | ✅      |
-| Runtime Environment Configuration     | ✅      |
-| Custom Trend / Counter / Rate Metrics | ✅      |
-| Scenario Execution Metrics            | ✅      |
-| Performance Thresholds                | ✅      |
-| Negative-Test Validation              | ✅      |
-| Configurable Load Profile             | ✅      |
-| Smoke / Load / Negative Scenarios     | ✅      |
-| Scenario Validation                   | ✅      |
-| Native JSON Reporting                 | ✅      |
-| Report Storage Structure              | ✅      |
-| Automated Result Analysis             | ✅      |
-| Scenario-Aware Analyzer Thresholds    | ✅      |
-| Version-Controlled Smoke Baseline     | ✅      |
-| Baseline Comparison                   | ✅      |
-| Performance Regression Detection      | ✅      |
-| GitHub Actions CI/CD                  | ✅      |
-| Automated Smoke Performance Execution | ✅      |
-| CI Performance Quality Gate           | ✅      |
-| HTML Performance Reporting            | ⏳      |
-| Historical Performance Trend Tracking | ⏳      |
-| Result Visualization                  | ⏳      |
-| Scheduled Heavy Performance Runs      | ⏳      |
+The planned framework development is **complete as of Iteration 25.13**.
+
+| Capability                            | Status                |
+| ------------------------------------- | --------------------- |
+| k6 API Testing                        | ✅                     |
+| QuickPizza E2E Workflow               | ✅                     |
+| User Registration                     | ✅                     |
+| Authentication                        | ✅                     |
+| Rating API Operations                 | ✅                     |
+| Negative API Testing                  | ✅                     |
+| API Utilities                         | ✅                     |
+| Centralized Configuration             | ✅                     |
+| Runtime Environment Configuration     | ✅                     |
+| Custom Trend / Counter / Rate Metrics | ✅                     |
+| Scenario Execution Metrics            | ✅                     |
+| Performance Thresholds                | ✅                     |
+| Negative-Test Validation              | ✅                     |
+| Configurable Load Profile             | ✅                     |
+| Smoke / Load / Negative Scenarios     | ✅                     |
+| Scenario Validation                   | ✅                     |
+| Native JSON Reporting                 | ✅                     |
+| Report Storage Structure              | ✅                     |
+| Automated Result Analysis             | ✅                     |
+| Scenario-Aware Analyzer Thresholds    | ✅                     |
+| Version-Controlled Smoke Baseline     | ✅                     |
+| Baseline Comparison                   | ✅                     |
+| Performance Regression Detection      | ✅                     |
+| GitHub Actions CI/CD                  | ✅                     |
+| Automated Smoke Performance Execution | ✅                     |
+| CI Performance Quality Gate           | ✅                     |
+| HTML Performance Reporting            | 🔮 Future Enhancement |
+| Historical Performance Trend Tracking | 🔮 Future Enhancement |
+| Result Visualization                  | 🔮 Future Enhancement |
+| Scheduled Heavy Performance Runs      | 🔮 Future Enhancement |
 
 ---
 
@@ -908,7 +928,7 @@ The primary goals are:
 * Negative API performance behavior
 * Regression detection
 
-The framework is intentionally designed so additional performance scenarios and reporting capabilities can be added incrementally.
+The completed framework provides the core performance-testing architecture, while additional reporting and advanced execution capabilities remain available as future enhancements.
 
 ---
 
@@ -956,7 +976,7 @@ This project demonstrates practical experience with:
 
 # 🔮 Planned Enhancements
 
-The following improvements are intentionally kept as future work:
+The following improvements are intentionally kept as future work and are outside the completed Iteration 25 development scope:
 
 * Additional QuickPizza API workflows
 * Additional load profiles
@@ -969,7 +989,7 @@ The following improvements are intentionally kept as future work:
 * Additional CI performance scenarios
 * Enhanced historical baseline management
 
-The project will continue to evolve incrementally as new performance-engineering capabilities are added.
+These enhancements can be added in future versions as the portfolio project evolves.
 
 ---
 
@@ -980,6 +1000,7 @@ The project will continue to evolve incrementally as new performance-engineering
 QA Automation Engineer / SDET
 
 GitHub:
+
 https://github.com/arindam0111
 
 ---
