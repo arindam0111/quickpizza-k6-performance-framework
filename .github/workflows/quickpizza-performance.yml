@@ -48,8 +48,10 @@ jobs:
         run: |
           node analyzer/analyzeReport.js reports/smoke/ci-smoke-result.json
 
-      - name: Upload k6 smoke report
+      - name: Upload k6 smoke reports
         uses: actions/upload-artifact@v4
         with:
-          name: quickpizza-smoke-report
-          path: reports/smoke/ci-smoke-result.json
+          name: quickpizza-smoke-reports
+          path: |
+            reports/smoke/ci-smoke-result.json
+            reports/smoke/ci-smoke-result-summary.json
