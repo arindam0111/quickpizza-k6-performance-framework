@@ -4,56 +4,13 @@ A reusable **API performance testing framework** built with **Grafana k6 and Jav
 
 The project demonstrates practical performance-testing engineering concepts including **end-to-end API workflows, authentication, custom metrics, thresholds, configurable load profiles, negative API testing, reusable utilities, environment configuration, scenario-based execution, structured test organization, automated result analysis, baseline comparison, performance regression detection, and CI/CD quality gates**.
 
-> **Project status:** Iteration 25.11 completed.
+> **Project status:** Iteration 25 completed.
 
 > This project is a hands-on learning and portfolio project focused on progressively building a maintainable k6 API performance-testing framework, from test execution and metrics collection through automated analysis, regression detection, and CI/CD validation.
 
 ---
 
-# 🎯 Project Overview
-
-QuickPizza is a demo application provided by Grafana for learning and demonstrating k6 performance testing and observability.
-
-This project uses the public QuickPizza environment:
-
-```text
-https://quickpizza.grafana.com
-```
-
-The objective is not simply to create individual k6 scripts, but to progressively transform a working k6 test into a **structured, reusable, and maintainable performance-testing framework**.
-
-The framework currently supports:
-
-* Positive end-to-end API testing
-* User registration
-* Authentication
-* Rating creation and retrieval
-* Rating listing
-* Rating deletion
-* Negative API testing
-* Configurable smoke and load scenarios
-* Runtime environment configuration
-* Custom business-level metrics
-* Performance thresholds
-* Native k6 JSON result reporting
-
-> The public QuickPizza environment is a shared demo service. Performance testing should therefore remain controlled and should not be treated as a capacity test of the public service.
-
----
-
-# 🛠️ Tech Stack
-
-| Technology                      | Usage                                  |
-| ------------------------------- | -------------------------------------- |
-| **Grafana k6**                  | API performance testing                |
-| **JavaScript**                  | Test scripts and framework development |
-| **QuickPizza**                  | Application under test                 |
-| **Git**                         | Version control                        |
-| **GitHub**                      | Source code repository                 |
-| **VS Code / GitHub Codespaces** | Development environment                |
-
----
-# 🚀 Key Features
+## 🚀 Key Features
 
 * k6 API performance testing
 * End-to-end API workflow
@@ -91,47 +48,98 @@ The framework currently supports:
 
 ---
 
+## 🛠️ Tech Stack
+
+| Technology                      | Purpose                                  |
+| ------------------------------- | ---------------------------------------- |
+| **Grafana k6**                  | API performance testing                  |
+| **JavaScript**                  | Test implementation                      |
+| **QuickPizza API**              | Application under test                   |
+| **Node.js**                     | Report analysis and comparison utilities |
+| **Git**                         | Version control                          |
+| **GitHub**                      | Source control and portfolio             |
+| **GitHub Actions**              | CI/CD execution                          |
+| **VS Code / GitHub Codespaces** | Development environment                  |
+
+---
+
+## 📋 Project Overview
+
+The purpose of this project is to build a maintainable API performance-testing framework rather than a collection of standalone k6 scripts.
+
+The framework progressively demonstrates:
+
+1. API test implementation
+2. Reusable API abstractions
+3. Centralized configuration
+4. Test-data management
+5. Custom performance metrics
+6. Scenario configuration
+7. Performance thresholds
+8. Negative API testing
+9. Native JSON result generation
+10. Automated performance-result analysis
+11. Version-controlled performance baselines
+12. Regression detection
+13. CI/CD quality gates
+
+---
+
 # 🏗️ Framework Architecture
 
-The framework separates API communication, configuration, test data, utilities, scenarios, and test execution.
-
 ```text
-                         k6 Test Execution
-                                │
-                ┌───────────────┴───────────────┐
-                │                               │
-                ▼                               ▼
-        Positive E2E Test                Negative API Test
-        quickPizzaE2E.js               ratingNegativeTest.js
-                │                               │
-                └───────────────┬───────────────┘
-                                │
-                                ▼
-                         API Layer
-                    ┌───────────┴───────────┐
-                    │                       │
-                    ▼                       ▼
-                userApi.js             ratingApi.js
-                    │                       │
-                    └───────────┬───────────┘
-                                │
-                                ▼
                          QuickPizza API
-                                │
-        ┌───────────────────────┼───────────────────────┐
-        │                       │                       │
-        ▼                       ▼                       ▼
-   Configuration            Test Data              Utilities
-        │                       │                       │
-        ▼                       ▼                       ▼
-      env.js              testData.js          request.js
-   scenarios.js
-  loadProfile.js
- thresholds.js
-negativeThresholds.js
+                              │
+                              ▼
+                    ┌───────────────────┐
+                    │   k6 Test Layer   │
+                    │ quickPizzaE2E.js  │
+                    └─────────┬─────────┘
+                              │
+              ┌───────────────┼────────────────┐
+              ▼               ▼                ▼
+        Positive E2E     Negative API     Custom Metrics
+              │               │                │
+              └───────────────┼────────────────┘
+                              ▼
+                       k6 Execution
+                              │
+                              ▼
+                    Native JSON Result
+                              │
+                              ▼
+                    analyzeReport.js
+                              │
+                              ▼
+                       Summary JSON
+                              │
+                    ┌─────────┴─────────┐
+                    ▼                   ▼
+              Thresholds          Baseline Summary
+                    │                   │
+                    └─────────┬─────────┘
+                              ▼
+                     compareReports.js
+                              │
+                              ▼
+                  Regression Detection
+                              │
+                       ┌──────┴──────┐
+                       ▼             ▼
+                     PASS           FAIL
+                             
+                             
+                    GitHub Actions CI
+                              │
+                              ▼
+                    Automated Smoke Test
+                              │
+                              ▼
+                    Analyzer + Comparison
+                              │
+                              ▼
+                     Quality Gate
 ```
-
-The purpose of this structure is to keep individual test files focused on **what is being tested**, while reusable components handle **how API operations, configuration, metrics, and test data are managed**.
 
 ---
 
@@ -140,6 +148,11 @@ The purpose of this structure is to keep individual test files focused on **what
 ```text
 quickpizza-k6-performance-framework/
 │
+├── analyzer/
+│   ├── analyzeReport.js
+│   ├── thresholds.js
+│   └── compareReports.js
+│
 ├── api/
 │   ├── userApi.js
 │   └── ratingApi.js
@@ -147,267 +160,577 @@ quickpizza-k6-performance-framework/
 ├── config/
 │   ├── env.js
 │   ├── loadProfile.js
-│   ├── negativeThresholds.js
 │   ├── scenarios.js
-│   └── thresholds.js
+│   ├── thresholds.js
+│   ├── negativeThresholds.js
+│   └── smokeThresholds.js
 │
 ├── data/
 │   └── testData.js
-│
-├── tests/
-│   ├── quickPizzaE2E.js
-│   └── negative/
-│       └── ratingNegativeTest.js
 │
 ├── utils/
 │   ├── helpers.js
 │   ├── metrics.js
 │   └── request.js
 │
+├── tests/
+│   ├── quickPizzaE2E.js
+│   └── negative/
+│       └── ratingNegativeTest.js
+│
 ├── reports/
-│   └── .gitkeep
+│   ├── .gitkeep
+│   ├── smoke/
+│   ├── load/
+│   ├── negative/
+│   └── baselines/
+│       └── smoke/
+│           └── smoke-baseline-summary.json
+│
+├── docs/
+│   ├── analyzer.md
+│   ├── performance-report-analysis.md
+│   └── performance-comparison.md
+│
+├── .github/
+│   └── workflows/
+│       └── quickpizza-performance.yml
 │
 ├── .gitignore
 └── README.md
 ```
 
-Generated performance result files are intentionally excluded from Git tracking.
-
-The `reports/.gitkeep` file keeps the reports directory available in the repository while generated result files remain local.
+> Generated k6 result files are excluded from Git, while the smoke baseline summary is intentionally version-controlled.
 
 ---
 
-# 🔄 Positive End-to-End Workflow
+# 🔄 Positive E2E Workflow
 
-The main E2E workflow validates the QuickPizza API through a complete business transaction.
+The main positive workflow validates a complete QuickPizza API transaction:
 
 ```text
-Generate Unique User
-        ↓
-Register User
-        ↓
-Authenticate
-        ↓
-Create Rating
-        ↓
-Get Rating
-        ↓
-Verify Rating
-        ↓
-List Ratings
-        ↓
-Delete Rating
-        ↓
-Verify Deletion
-        ↓
-Record Metrics
+User Registration
+       ↓
+Authentication
+       ↓
+Create Order
+       ↓
+Get Order
+       ↓
+List Orders
+       ↓
+Verify Order
+       ↓
+Delete Order
+       ↓
+Cleanup
 ```
 
-The workflow is executed repeatedly by k6 virtual users during the configured load scenario.
+The workflow uses reusable API functions and custom metrics to capture both technical and business-level performance information.
 
 ---
 
 # 🔐 Authentication
 
-The framework includes authentication as part of the end-to-end transaction.
+Authentication is handled through reusable API utilities.
 
-The authentication functionality is separated into reusable API functions:
-
-```text
-api/userApi.js
-```
-
-The login operation uses the returned authentication token for subsequent protected API requests.
-
-Authentication performance is also measured through the custom:
-
-```text
-login_success_rate
-```
-
-metric.
-
----
-
-# 🧩 API Layer
-
-The API layer contains reusable functions for interacting with QuickPizza endpoints.
-
-## User API
-
-`api/userApi.js`
-
-Provides:
+The framework supports:
 
 * User registration
-* User authentication
+* Login
+* Authentication token handling
+* Authenticated API requests
+* Runtime password configuration
 
-Example operations:
-
-```text
-registerUser()
-loginUser()
-```
-
-## Rating API
-
-`api/ratingApi.js`
-
-Provides:
-
-* Create rating
-* Get rating
-* List ratings
-* Delete rating
-
-Example operations:
-
-```text
-createRating()
-getRating()
-listRatings()
-deleteRating()
-```
-
-The historical internal naming of some transaction tags such as `create_order` and `get_order` is intentionally preserved for framework consistency.
+Credentials are supplied through environment variables rather than hard-coded values.
 
 ---
 
-# 🧪 Negative API Testing
+# 🔌 API Layer
+
+API operations are separated from test-flow logic.
+
+### `api/userApi.js`
+
+Responsible for user-related operations such as:
+
+* Registration
+* Login
+
+### `api/ratingApi.js`
+
+Responsible for QuickPizza API operations such as:
+
+* Creating orders
+* Retrieving orders
+* Listing orders
+* Verifying orders
+* Deleting orders
+
+This separation improves reuse and keeps the test scenarios focused on business flows.
+
+---
+
+# ❌ Negative API Testing
 
 Negative API scenarios are maintained separately from the positive E2E workflow.
 
-Test file:
+Current negative testing includes validation of API behavior for invalid request conditions.
+
+Example:
 
 ```text
-tests/negative/ratingNegativeTest.js
+Negative API Scenario
+        ↓
+Invalid Request
+        ↓
+API Response
+        ↓
+Status Validation
+        ↓
+Response Validation
+        ↓
+Performance Measurement
 ```
 
-Current negative scenarios include:
-
-### Invalid Rating ID
-
-Attempts to retrieve a non-existent rating.
-
-Expected response:
-
-```text
-404
-```
-
-### Invalid Authentication
-
-Uses an invalid authentication token.
-
-Expected response:
-
-```text
-401
-```
-
-### Invalid Rating Data
-
-Sends invalid rating data.
-
-Expected response:
-
-```text
-400
-```
-
-The negative test verifies these expected error responses through k6 checks.
-
-> Expected HTTP error responses in negative testing can contribute to k6's `http_req_failed` metric. The negative scenario therefore focuses on explicit response validation rather than treating expected application errors as unexpected test failures.
+Negative tests are intentionally handled separately because their expected behavior and thresholds differ from positive performance scenarios.
 
 ---
 
 # 📊 Custom Metrics
 
-The framework uses custom k6 metrics to measure both technical performance and business-level behavior.
+The framework uses custom k6 metrics to measure business and technical behavior.
 
-## Transaction Time
+### Trend Metrics
 
-```text
-transaction_time
-```
+Used for measuring transaction duration and other continuous performance values.
 
-A `Trend` metric used to measure the duration of the complete business transaction.
+### Counter Metrics
 
-This provides additional visibility beyond individual HTTP request timings.
+Used to count successful business operations.
 
----
+### Rate Metrics
 
-## Successful Orders
+Used to measure reliability indicators such as:
 
-```text
-successful_orders
-```
+* Login success rate
+* Failure rate
 
-A `Counter` used to track successfully completed business transactions.
+### Scenario Execution Metrics
 
-The historical metric name `successful_orders` is retained for framework consistency even though the current QuickPizza workflow uses rating APIs.
-
----
-
-## Login Success Rate
-
-```text
-login_success_rate
-```
-
-A `Rate` used to measure the proportion of successful authentication attempts.
-
-This helps identify authentication failures separately from downstream API failures.
-
----
-
-## Scenario Executions
-
-```text
-scenario_executions
-```
-
-A `Counter` used to track completed framework executions with scenario tags.
-
-Example scenario tag:
-
-```text
-scenario=smoke_test
-```
-
-or:
-
-```text
-scenario=load_test
-```
-
-This provides additional visibility into which configured execution mode generated the metrics.
+The framework also tracks scenario execution information to make test results easier to analyze.
 
 ---
 
 # 🎯 Performance Thresholds
 
-The framework uses k6 thresholds to define validation criteria for important metrics.
+Performance thresholds are centralized rather than being distributed across individual tests.
 
-Thresholds are centralized in:
+The framework supports thresholds for:
+
+* HTTP request duration
+* HTTP request failure rate
+* Check success rate
+* Transaction duration
+* Login success rate
+* Successful business operations
+* Endpoint-specific response times
+* Group-level performance
+
+Example:
 
 ```text
-config/thresholds.js
+HTTP request p95
+        ↓
+Threshold evaluation
+        ↓
+PASS / FAIL
 ```
 
-Examples include:
+---
+
+# 🧪 Scenario-Based Thresholds
+
+Different scenarios have different performance expectations.
+
+The framework currently distinguishes between:
+
+### Smoke Test
+
+Used for lightweight CI validation.
+
+Smoke thresholds focus on stable indicators such as:
+
+* HTTP response time
+* HTTP failure rate
+* Check success rate
+* Transaction time
+* Login success rate
+
+### Load Test
+
+Used for broader performance validation.
+
+Load thresholds additionally include business-volume validation such as successful orders.
+
+### Negative Test
+
+Negative scenarios use separate validation logic and do not use the positive-test threshold set.
+
+---
+
+# ⚙️ Load Profile
+
+Load behavior is configurable through:
 
 ```text
-http_req_duration
-http_req_failed
-checks
-iteration_duration
-transaction_time
-successful_orders
-login_success_rate
+config/loadProfile.js
 ```
 
-Endpoint-level thresholds are also defined for API operations such as:
+This allows the framework to separate:
+
+* Test logic
+* Load configuration
+* Scenario configuration
+* Threshold configuration
+
+The framework can therefore evolve from lightweight validation to longer performance runs without rewriting the test workflow.
+
+---
+
+# 🎬 Scenario Configuration
+
+Scenario definitions are centralized in:
+
+```text
+config/scenarios.js
+```
+
+The framework currently supports scenario-based execution including:
+
+* Smoke testing
+* Load testing
+* Negative testing
+
+The selected scenario controls the appropriate execution configuration and threshold strategy.
+
+---
+
+# 🔧 Environment Configuration
+
+Runtime environment configuration is centralized in:
+
+```text
+config/env.js
+```
+
+The framework supports environment variables such as:
+
+```text
+BASE_URL
+PASSWORD
+TEST_SCENARIO
+```
+
+Example:
+
+```powershell
+$env:BASE_URL="https://quickpizza.grafana.com"
+$env:PASSWORD="your-password"
+$env:TEST_SCENARIO="smoke_test"
+```
+
+This allows the same framework to be executed against different environments without modifying the test source code.
+
+---
+
+# 📝 Test Data
+
+Test data is centralized in:
+
+```text
+data/testData.js
+```
+
+This keeps test data separate from test-flow logic and makes future data expansion easier.
+
+---
+
+# ▶️ Test Execution
+
+## Smoke Test
+
+```powershell
+$env:TEST_SCENARIO="smoke_test"
+k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
+```
+
+## Load Test
+
+```powershell
+$env:TEST_SCENARIO="load_test"
+k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
+```
+
+## Negative Test
+
+```powershell
+k6 run --insecure-skip-tls-verify tests/negative/ratingNegativeTest.js
+```
+
+---
+
+# 📦 JSON Result Reporting
+
+k6 native JSON output is used as the raw performance-test result.
+
+Example:
+
+```powershell
+k6 run --insecure-skip-tls-verify `
+  --out json=reports/smoke/smoke-result.json `
+  tests/quickPizzaE2E.js
+```
+
+The resulting JSON is then processed by the framework analyzer.
+
+```text
+k6 JSONL Result
+       ↓
+analyzeReport.js
+       ↓
+Structured Summary JSON
+```
+
+The raw k6 result is intentionally treated as the execution-level data source, while the summary JSON provides a stable structure for analysis and comparison.
+
+---
+
+# 📈 Automated Performance Result Analysis
+
+The framework includes an automated report analyzer:
+
+```text
+analyzer/analyzeReport.js
+```
+
+Its responsibilities include:
+
+* Reading native k6 JSON results
+* Aggregating performance metrics
+* Calculating summary statistics
+* Extracting reliability information
+* Extracting endpoint metrics
+* Extracting business metrics
+* Evaluating scenario-specific thresholds
+* Producing structured summary JSON
+
+Execution:
+
+```powershell
+node analyzer/analyzeReport.js reports/smoke/smoke-result.json
+```
+
+Output:
+
+```text
+reports/smoke/smoke-summary.json
+```
+
+---
+
+# 🎯 Analyzer Thresholds
+
+Analyzer thresholds are centralized in:
+
+```text
+analyzer/thresholds.js
+```
+
+The analyzer selects thresholds according to the executed scenario.
+
+```text
+Scenario
+   │
+   ├── smoke_test → smoke thresholds
+   │
+   ├── load_test  → load thresholds
+   │
+   └── negative_test → negative analysis
+```
+
+This prevents load-specific business-volume thresholds from incorrectly failing lightweight smoke tests.
+
+---
+
+# 🧮 Performance Result Comparison
+
+The framework compares the current performance summary against a version-controlled baseline.
+
+Comparison utility:
+
+```text
+analyzer/compareReports.js
+```
+
+Execution:
+
+```powershell
+node analyzer/compareReports.js `
+  reports/baselines/smoke/smoke-baseline-summary.json `
+  reports/smoke/smoke-summary.json
+```
+
+The comparison evaluates:
+
+* Performance metrics
+* Reliability metrics
+* Endpoint metrics
+* Business metrics
+* Scenario compatibility
+
+---
+
+# 🚨 Performance Regression Detection
+
+The framework uses a **5% tolerance** for regression detection.
+
+```text
+Version-Controlled Baseline
+            ↓
+      Current Summary
+            ↓
+      Metric Comparison
+            ↓
+        5% Tolerance
+            ↓
+    ┌───────┴────────┐
+    ↓                ↓
+No Regression     Regression
+    ↓                ↓
+   PASS             FAIL
+```
+
+Comparison results classify metrics as:
+
+* `IMPROVEMENT`
+* `REGRESSION`
+* `NO_CHANGE`
+* `NOT_COMPARABLE`
+* `NOT_AVAILABLE`
+
+The comparison utility returns a non-zero exit code when a regression is detected, allowing CI/CD to enforce the performance quality gate.
+
+---
+
+# 🧱 Performance Baseline
+
+The smoke baseline is stored in:
+
+```text
+reports/baselines/smoke/smoke-baseline-summary.json
+```
+
+Only the structured summary is version-controlled.
+
+Generated raw performance results remain excluded from Git.
+
+This provides a lightweight approach to performance regression tracking without requiring a database or external performance platform.
+
+> The baseline is intentionally not overwritten automatically after every CI execution. Updating the baseline is a deliberate repository change.
+
+---
+
+# 🔄 CI/CD with GitHub Actions
+
+The framework includes:
+
+```text
+.github/workflows/quickpizza-performance.yml
+```
+
+The CI pipeline performs:
+
+```text
+Git Push / Pull Request / Manual Run
+                ↓
+       GitHub Actions Runner
+                ↓
+        Checkout Repository
+                ↓
+           Install k6
+                ↓
+      Run QuickPizza Smoke Test
+                ↓
+        Generate JSON Result
+                ↓
+       Analyze Performance Result
+                ↓
+        Generate Summary JSON
+                ↓
+       Compare Against Baseline
+                ↓
+       Regression Detection
+                ↓
+          Quality Gate
+```
+
+The workflow uploads the generated smoke-test artifacts for inspection.
+
+---
+
+# 🚦 CI Performance Quality Gate
+
+The CI pipeline fails when the smoke performance comparison detects a regression.
+
+This makes performance testing part of the CI validation process rather than an isolated manual activity.
+
+The quality-gate flow is:
+
+```text
+Smoke Test
+    ↓
+Analyzer
+    ↓
+Summary
+    ↓
+Baseline Comparison
+    ↓
+Regression Detection
+    ↓
+┌───────────────┐
+│               │
+PASS            FAIL
+│               │
+CI Continues    CI Fails
+```
+
+---
+
+# 📊 Performance Metrics
+
+The framework captures multiple categories of metrics.
+
+### HTTP Metrics
+
+* Request duration
+* Request failure rate
+* Request count
+
+### Reliability Metrics
+
+* Check success rate
+* Login success rate
+* HTTP failure rate
+
+### Transaction Metrics
+
+* Transaction duration
+* Scenario execution metrics
+
+### Endpoint Metrics
+
+Metrics can be analyzed for individual operations such as:
 
 ```text
 register
@@ -419,729 +742,234 @@ verify_order
 delete_order
 ```
 
-Group-level thresholds are used for logical workflow sections such as:
+### Business Metrics
+
+Examples include:
 
 ```text
-User Registration
-Authentication
-Order Management
-Order Verification
-Cleanup
+successful_orders
 ```
 
-Negative-test thresholds are maintained separately in:
-
-```text
-config/negativeThresholds.js
-```
-
-> Thresholds in this project are **test-environment validation criteria** and should not be interpreted as production SLAs.
+Historical internal metric and transaction names are intentionally preserved for framework consistency.
 
 ---
 
-# 📈 Load Profile
-
-The configured load profile is maintained in:
-
-```text
-config/loadProfile.js
-```
-
-Current profile:
-
-```text
-30s  →  5 VUs
-1m   → 10 VUs
-2m   → 15 VUs
-1m   → 10 VUs
-30s  →  0 VUs
-```
-
-Visually:
-
-```text
-0
-│
-│       ┌───────────────┐
-│       │               │
-│   5 ──┘               │
-│                       │
-│              ┌────────┘
-│             15
-│        ┌───────────────┐
-│       10               │
-│                       └────
-│
-└──────────────────────────────
-       30s  1m  2m  1m  30s
-```
-
-The load profile is intentionally controlled because the public QuickPizza environment is a shared demo service.
-
-The objective is to practice:
-
-* Load modeling
-* Virtual-user behavior
-* Scenario configuration
-* Performance measurement
-* Threshold validation
-* Result analysis
-
-rather than attempting to determine the capacity of the public service.
-
----
-
-# ⚙️ Scenario Configuration
-
-Scenario definitions are centralized in:
-
-```text
-config/scenarios.js
-```
-
-The framework currently supports:
-
-## Smoke Scenario
-
-```text
-executor: shared-iterations
-VUs: 1
-iterations: 1
-maxDuration: 1m
-```
-
-## Load Scenario
-
-```text
-executor: ramping-vus
-startVUs: 0
-configured load stages
-gracefulRampDown: 30s
-```
-
-The test scenario is selected at runtime using:
-
-```text
-TEST_SCENARIO
-```
-
-Supported values:
-
-```text
-smoke_test
-load_test
-```
-
-Invalid scenario values are rejected before test execution.
-
----
-
-# 🧪 Test Execution
-
-The primary positive test is:
-
-```text
-tests/quickPizzaE2E.js
-```
-
-The negative API test is:
-
-```text
-tests/negative/ratingNegativeTest.js
-```
-
----
-
-## Smoke Test
-
-The smoke scenario performs a single end-to-end execution using one VU and one iteration.
-
-PowerShell:
-
-```powershell
-$env:TEST_SCENARIO="smoke_test"
-k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
-```
-
-The execution output includes:
-
-```text
-Execution Mode  : smoke_test
-```
-
----
-
-## Load Test
-
-The load scenario uses the configured ramping-VUs profile.
-
-PowerShell:
-
-```powershell
-$env:TEST_SCENARIO="load_test"
-k6 run --insecure-skip-tls-verify tests/quickPizzaE2E.js
-```
-
-The execution output includes:
-
-```text
-Execution Mode  : load_test
-```
-
-This command runs the framework's configured performance scenario rather than replacing it with an ad-hoc `--vus` or `--duration` configuration.
-
----
-
-## Negative API Test
-
-Run the negative test independently:
-
-```powershell
-k6 run --insecure-skip-tls-verify tests/negative/ratingNegativeTest.js
-```
-
-This validates:
-
-```text
-Invalid Rating ID
-        ↓
-404
-
-Invalid Authentication
-        ↓
-401
-
-Invalid Rating Data
-        ↓
-400
-```
-
----
-
-# 🌐 Environment Configuration
-
-Environment configuration is centralized in:
-
-```text
-config/env.js
-```
-
-The framework supports runtime overrides using k6 environment variables.
-
-## Base URL
-
-Example:
-
-```powershell
-$env:BASE_URL="https://quickpizza.grafana.com"
-```
-
-## Password
-
-Example:
-
-```powershell
-$env:PASSWORD="your-password"
-```
-
-The same framework can therefore be executed against another compatible QuickPizza environment without changing the test implementation.
-
----
-
-# 📊 JSON Result Reporting
-
-k6 provides native JSON result output.
-
-The framework has a dedicated:
-
-```text
-reports/
-```
-
-directory for performance-test result artifacts.
-
-Example smoke-test report:
-
-```powershell
-$env:TEST_SCENARIO="smoke_test"
-k6 run --insecure-skip-tls-verify --out json=reports/smoke/smoke-result.json tests/quickPizzaE2E.js
-```
-
-The generated JSON contains detailed metric information including:
-
-* Metric definitions
-* Metric values
-* Timestamps
-* Threshold definitions
-* Scenario information
-* HTTP methods
-* HTTP status codes
-* Endpoint tags
-* Group tags
-* Request performance data
-* Custom metrics
-
-Example structure:
-
-```text
-reports/
-├── .gitkeep
-├── smoke/
-├── load/
-└── negative/
-```
-
-Generated performance result files are ignored by Git.
-
-This keeps the repository focused on framework source code and documentation rather than individual execution artifacts.
-
----
-
-# 📋 Example k6 Execution
-
-A configured smoke execution provides output similar to:
-
-```text
-execution: local
-
-scenarios:
-  smoke_test
-
-Execution Mode:
-  smoke_test
-
-checks:
-  response validation
-  business validation
-  workflow validation
-
-custom metrics:
-  transaction_time
-  successful_orders
-  login_success_rate
-  scenario_executions
-```
-
-A configured load execution uses:
-
-```text
-scenario:
-  load_test
-
-profile:
-  0 → 5 → 10 → 15 → 10 → 0 VUs
-```
-
-The actual number of iterations, requests, response times, and metric values depend on the selected scenario, configured load profile, network conditions, and execution environment.
-
----
-
-# 🔍 Validation Strategy
-
-The framework validates more than HTTP response status.
-
-Validation can be divided into multiple levels.
-
-## 1. HTTP Validation
-
-```text
-HTTP status
-```
-
-Confirms that the API request received the expected HTTP response.
-
----
-
-## 2. Response Validation
-
-```text
-Response body
-Response fields
-Authentication token
-```
-
-Confirms that the returned API response contains expected information.
-
----
-
-## 3. Business Validation
-
-```text
-Successful transaction
-Rating creation
-Rating retrieval
-Rating deletion
-```
-
-Confirms that the complete business workflow behaves as expected.
-
----
-
-## 4. Performance Validation
-
-```text
-Response time
-Transaction time
-Iteration duration
-Threshold compliance
-```
-
-Confirms that execution remains within configured performance criteria.
-
----
-
-## 5. Negative Validation
-
-```text
-Invalid input
-Invalid authentication
-Invalid resource
-```
-
-Confirms that expected application error responses are correctly handled.
+# 🧪 Validation Strategy
+
+The framework validates both functional and performance behavior.
+
+Validation includes:
+
+* HTTP status checks
+* Response checks
+* Business checks
+* Authentication validation
+* Endpoint performance
+* Transaction performance
+* Scenario execution
+* Threshold evaluation
+* Negative API behavior
+* Regression comparison
 
 ---
 
 # 🧩 Framework Components
 
-## API Layer
-
-The API layer contains reusable communication functions for interacting with QuickPizza endpoints.
-
-```text
-api/
-├── userApi.js
-└── ratingApi.js
-```
-
-This keeps raw HTTP communication separate from test scenarios.
-
----
-
-## Configuration Layer
-
-The configuration layer centralizes:
-
-* Environment settings
-* Base URL
-* Password override
-* Load profiles
-* Scenario configuration
-* Performance thresholds
-* Negative-test thresholds
-
-```text
-config/
-├── env.js
-├── loadProfile.js
-├── negativeThresholds.js
-├── scenarios.js
-└── thresholds.js
-```
+| Component            | Responsibility                                      |
+| -------------------- | --------------------------------------------------- |
+| `api/`               | Reusable API operations                             |
+| `config/`            | Runtime, scenario, load and threshold configuration |
+| `data/`              | Centralized test data                               |
+| `utils/`             | Shared helpers, metrics and request utilities       |
+| `tests/`             | Performance and negative test scenarios             |
+| `analyzer/`          | Result analysis and comparison                      |
+| `reports/`           | Generated reports and version-controlled baselines  |
+| `docs/`              | Framework documentation                             |
+| `.github/workflows/` | CI/CD automation                                    |
 
 ---
 
-## Test Data Layer
+# 🧱 Framework Design Principles
 
-Test data is centralized in:
+The framework follows several maintainability principles:
 
-```text
-data/testData.js
-```
+### Separation of Concerns
 
-The file contains reusable positive and negative test data.
+API operations, configuration, test data, utilities, analysis and test execution are separated.
 
-Examples include:
+### Reusability
 
-```text
-ratingData
-negativeRatingData
-```
+Common operations are implemented as reusable functions.
 
----
+### Centralized Configuration
 
-## Test Layer
+Environment variables, scenarios, thresholds and load profiles are centralized.
 
-The test layer contains the actual k6 test entry points.
+### Scenario Awareness
 
-```text
-tests/
-├── quickPizzaE2E.js
-└── negative/
-    └── ratingNegativeTest.js
-```
+Smoke, load and negative scenarios use appropriate execution and validation strategies.
 
-The test workflow focuses primarily on:
+### Automation
 
-```text
-Arrange
-   ↓
-Execute
-   ↓
-Validate
-   ↓
-Record Metrics
-```
+Performance result analysis and regression detection are automated.
 
----
+### CI/CD Integration
 
-## Utility Layer
+Smoke performance validation is integrated into GitHub Actions.
 
-Reusable helper functionality is maintained under:
+### Version-Controlled Baseline
 
-```text
-utils/
-```
-
-Current utilities include:
-
-```text
-helpers.js
-metrics.js
-request.js
-```
-
-These utilities keep common functionality out of the main test workflow.
-
----
-
-# 🧠 Framework Design Principles
-
-## Separation of Concerns
-
-API communication, configuration, test data, utilities, and test execution are separated.
-
-## Reusability
-
-Common API operations and utilities are implemented once and reused across scenarios.
-
-## Maintainability
-
-Centralized configuration and reusable API functions make it easier to extend the framework.
-
-## Observability
-
-Custom metrics provide visibility into technical performance and business-level behavior.
-
-## Scenario-Based Execution
-
-Different test purposes are represented by explicit execution scenarios.
-
-## Incremental Development
-
-The framework is intentionally built through small iterations rather than attempting to create a large framework in one step.
-
-## Controlled Performance Testing
-
-The project uses controlled load levels when testing the public QuickPizza environment.
+Performance regression detection uses a deliberate, version-controlled baseline rather than automatically changing the expected performance after every run.
 
 ---
 
 # 📚 Development Iteration History
 
-The framework has been developed incrementally through multiple iterations.
-
-### Iterations 1–7
-
-Initial framework organization, API workflow development, configuration, utilities, and reusable components were introduced.
-
-### Iteration 8
-
-Improved the E2E framework structure, workflow execution, validation, and metrics.
-
-### Iterations 9–13
-
-Improved:
-
-* Load configuration
-* Scenario management
-* Performance thresholds
-* Test data organization
-* Framework configuration
-
-### Iteration 14
-
-Added negative API scenarios.
-
-### Iteration 15
-
-Added scenario execution metrics.
-
-### Iteration 16
-
-Added scenario tags to transaction metrics.
-
-### Iteration 17
-
-Expanded negative API coverage.
-
-### Iteration 18
-
-Centralized negative test data.
-
-### Iteration 19
-
-Externalized runtime environment configuration.
-
-### Iteration 20
-
-Completed execution-model validation for:
-
-* Smoke testing
-* Configured load testing
-* Negative API testing
-* Regression validation
-
-### Iteration 21
-
-Improved execution control and reporting preparation.
-
-Completed work includes:
-
-* Execution-mode metadata
-* Smoke execution validation
-* Full configured load validation
-* Negative execution validation
-* Runtime configuration review
-* Native k6 JSON reporting validation
-* JSON result structure inspection
-* Report storage configuration
-* Generated-report Git exclusion
-* Report directory preservation
-* Execution documentation review
-
-> The iteration history represents the learning and development progression of the project.
+| Iteration | Description                                                | Status |
+| --------- | ---------------------------------------------------------- | ------ |
+| 1         | Initialize k6 performance framework                        | ✅      |
+| 2         | Centralize environment configuration                       | ✅      |
+| 3         | Add reusable test data utilities                           | ✅      |
+| 4         | Centralize custom k6 metrics                               | ✅      |
+| 5         | Extract user API operations                                | ✅      |
+| 6         | Extract rating API operations                              | ✅      |
+| 7         | Centralize API request headers                             | ✅      |
+| 8         | Add configurable load profile                              | ✅      |
+| 9         | Add configurable performance scenarios                     | ✅      |
+| 10        | Add smoke test scenario                                    | ✅      |
+| 11        | Validate performance test scenario                         | ✅      |
+| 12        | Centralize performance thresholds                          | ✅      |
+| 13        | Centralize test data                                       | ✅      |
+| 14        | Add negative API scenarios                                 | ✅      |
+| 15        | Add scenario execution metrics                             | ✅      |
+| 16        | Add scenario tags to transaction metrics                   | ✅      |
+| 17        | Expand negative API coverage                               | ✅      |
+| 18        | Centralize negative test data                              | ✅      |
+| 19        | Externalize environment configuration                      | ✅      |
+| 20        | Framework validation and cleanup                           | ✅      |
+| 21        | Configure performance report storage                       | ✅      |
+| 22        | Add performance result analysis strategy                   | ✅      |
+| 23        | Add automated k6 report analyzer                           | ✅      |
+| 24        | Add performance result comparison and regression detection | ✅      |
+| 25        | Add GitHub Actions CI/CD and performance quality gate      | ✅      |
 
 ---
 
-# 📊 Current Framework Status
+# 📌 Current Framework Status
 
-| Capability                         | Status |
-| ---------------------------------- | ------ |
-| k6 API Testing                     | ✅      |
-| QuickPizza E2E Workflow            | ✅      |
-| User Registration                  | ✅      |
-| Authentication                     | ✅      |
-| Rating API Operations              | ✅      |
-| Negative API Testing               | ✅      |
-| API Utilities                      | ✅      |
-| Centralized Configuration          | ✅      |
-| Runtime Environment Configuration  | ✅      |
-| Custom Trend Metric                | ✅      |
-| Custom Counter Metric              | ✅      |
-| Custom Rate Metric                 | ✅      |
-| Scenario Execution Metric          | ✅      |
-| Checks                             | ✅      |
-| Performance Thresholds             | ✅      |
-| Negative-Test Thresholds           | ✅      |
-| Configurable Load Profile          | ✅      |
-| Smoke Scenario                     | ✅      |
-| Load Scenario                      | ✅      |
-| Negative Scenario                  | ✅      |
-| Scenario Validation                | ✅      |
-| Native JSON Reporting              | ✅      |
-| Report Storage Structure           | ✅      |
-| Git Exclusion of Generated Reports | ✅      |
-| Advanced HTML Reporting            | ⏳      |
-| GitHub Actions CI/CD               | ⏳      |
-| Automated Performance Execution    | ⏳      |
-| Historical Result Tracking         | ⏳      |
-| Result Visualization               | ⏳      |
+| Capability                            | Status |
+| ------------------------------------- | ------ |
+| k6 API Testing                        | ✅      |
+| QuickPizza E2E Workflow               | ✅      |
+| User Registration                     | ✅      |
+| Authentication                        | ✅      |
+| Rating API Operations                 | ✅      |
+| Negative API Testing                  | ✅      |
+| API Utilities                         | ✅      |
+| Centralized Configuration             | ✅      |
+| Runtime Environment Configuration     | ✅      |
+| Custom Trend / Counter / Rate Metrics | ✅      |
+| Scenario Execution Metrics            | ✅      |
+| Performance Thresholds                | ✅      |
+| Negative-Test Validation              | ✅      |
+| Configurable Load Profile             | ✅      |
+| Smoke / Load / Negative Scenarios     | ✅      |
+| Scenario Validation                   | ✅      |
+| Native JSON Reporting                 | ✅      |
+| Report Storage Structure              | ✅      |
+| Automated Result Analysis             | ✅      |
+| Scenario-Aware Analyzer Thresholds    | ✅      |
+| Version-Controlled Smoke Baseline     | ✅      |
+| Baseline Comparison                   | ✅      |
+| Performance Regression Detection      | ✅      |
+| GitHub Actions CI/CD                  | ✅      |
+| Automated Smoke Performance Execution | ✅      |
+| CI Performance Quality Gate           | ✅      |
+| HTML Performance Reporting            | ⏳      |
+| Historical Performance Trend Tracking | ⏳      |
+| Result Visualization                  | ⏳      |
+| Scheduled Heavy Performance Runs      | ⏳      |
 
 ---
 
-# 🧪 Performance Testing Scope
+# 📈 Performance Testing Scope
 
-This project demonstrates practical performance-testing concepts including:
+The framework currently focuses on API performance testing using k6.
 
-* Baseline testing
-* Load modeling
-* Virtual users
-* Iterations
-* Ramp-up and ramp-down
-* Response-time measurement
-* End-to-end transaction measurement
-* Custom metrics
-* Thresholds
-* Business transaction measurement
-* Authentication performance
-* API workflow performance
-* Negative API validation
-* Scenario-based execution
-* Result collection
+The primary goals are:
 
-The project is intended to strengthen practical understanding of k6 and performance-test framework development.
+* Response-time validation
+* Reliability measurement
+* Transaction performance
+* Endpoint-level performance
+* Business-level performance indicators
+* Smoke performance validation
+* Load-test execution
+* Negative API performance behavior
+* Regression detection
+
+The framework is intentionally designed so additional performance scenarios and reporting capabilities can be added incrementally.
 
 ---
 
 # ⚠️ Test Environment Disclaimer
 
-This project uses the **public QuickPizza demo environment**.
+QuickPizza is a public application used for learning and portfolio demonstration.
 
-Performance results can be influenced by factors such as:
+Performance results can vary depending on:
 
-* Shared public infrastructure
 * Network conditions
-* Service availability
-* Test load
-* Execution environment
-* Temporary service variability
+* Server-side workload
+* Test execution environment
+* Geographic location
+* Time of execution
+* Public service availability
 
-Therefore, results generated from the public environment should **not be interpreted as production capacity benchmarks or production SLAs**.
-
-The framework is primarily intended for:
-
-```text
-Framework Development
-        ↓
-Performance Testing Practice
-        ↓
-Metric Collection
-        ↓
-Threshold Validation
-        ↓
-Result Analysis
-```
+Therefore, individual test results should be interpreted as observations from a specific test execution rather than permanent performance characteristics of the application.
 
 ---
 
-# 🎓 Learning Objectives
+# 🎯 Learning Objectives
 
-This project is being developed to strengthen practical skills in:
+This project demonstrates practical experience with:
 
-* Grafana k6
-* JavaScript
-* API testing
-* Performance testing
-* Load modeling
-* Virtual-user modeling
-* Custom metrics
-* Thresholds
-* Negative testing
-* Test architecture
-* Reusable framework design
-* Environment configuration
-* Git and GitHub
+* k6 API performance testing
+* JavaScript-based performance automation
+* API workflow design
+* Authentication handling
+* Test-data management
+* Custom k6 metrics
+* Performance thresholds
+* Load profiles
+* Scenario configuration
+* Negative API testing
+* JSON result processing
 * Performance-result analysis
+* Baseline comparison
+* Regression detection
+* CI/CD integration
+* Performance quality gates
+* Framework architecture
+* Maintainable test automation design
 
 ---
 
 # 🔮 Planned Enhancements
 
-Future improvements may include:
+The following improvements are intentionally kept as future work:
 
-* Additional API workflows
-* More structured scenario configuration
+* Additional QuickPizza API workflows
 * Additional load profiles
+* Expanded stress-testing scenarios
+* Soak-testing scenarios
 * HTML performance reports
-* Automated report generation
-* GitHub Actions integration
-* Automated performance-test execution
-* Historical result comparison
 * Improved result visualization
-* Performance trend analysis
+* Performance trend tracking
+* Scheduled performance executions
+* Additional CI performance scenarios
+* Enhanced historical baseline management
 
-These enhancements will be implemented incrementally rather than adding unnecessary framework complexity.
+The project will continue to evolve incrementally as new performance-engineering capabilities are added.
 
 ---
 
@@ -1151,43 +979,33 @@ These enhancements will be implemented incrementally rather than adding unnecess
 
 QA Automation Engineer / SDET
 
-### Areas of Focus
-
-* UI Test Automation
-* Selenium WebDriver
-* Playwright
-* API Testing
-* k6 Performance Testing
-* Java
-* JavaScript / TypeScript
-* TestNG
-* CI/CD
-* Automation Framework Development
+GitHub:
+https://github.com/arindam0111
 
 ---
 
-# ⭐ Project Goal
+# 🎯 Project Goal
 
-The goal of this project is to demonstrate the ability to progressively:
+The goal of this project is to demonstrate how a **maintainable API performance-testing framework** can evolve from basic k6 test scripts into an engineering-oriented solution with:
 
 ```text
-Design
-  ↓
-Structure
-  ↓
-Automate
-  ↓
-Execute
-  ↓
-Measure
-  ↓
-Validate
-  ↓
-Analyze
-  ↓
-Improve
+Reusable API Layer
+        ↓
+Configurable Test Scenarios
+        ↓
+Custom Performance Metrics
+        ↓
+Performance Thresholds
+        ↓
+Native JSON Results
+        ↓
+Automated Result Analysis
+        ↓
+Version-Controlled Baseline
+        ↓
+Regression Detection
+        ↓
+CI/CD Quality Gate
 ```
 
-Rather than focusing only on individual k6 scripts, the project emphasizes the development of a **maintainable API performance-testing framework** with reusable components, configurable scenarios, meaningful metrics, validation criteria, and controlled execution.
-
-This project is part of my ongoing learning journey toward stronger **QA Automation / SDET / Performance Testing** capabilities.
+This project is designed as a practical portfolio demonstration of **QA Automation, API Testing, Performance Testing, JavaScript, k6, CI/CD, and SDET engineering practices**.
