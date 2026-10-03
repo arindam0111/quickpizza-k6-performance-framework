@@ -2,11 +2,11 @@
 
 A reusable **API performance testing framework** built with **Grafana k6 and JavaScript**, using the public **QuickPizza** application.
 
-The project demonstrates practical performance-testing concepts including **end-to-end API workflows, authentication, custom metrics, thresholds, configurable load profiles, negative API testing, reusable utilities, environment configuration, scenario-based execution, and structured test organization**.
+The project demonstrates practical performance-testing engineering concepts including **end-to-end API workflows, authentication, custom metrics, thresholds, configurable load profiles, negative API testing, reusable utilities, environment configuration, scenario-based execution, structured test organization, automated result analysis, baseline comparison, performance regression detection, and CI/CD quality gates**.
 
-> **Project status:** Iteration 21 completed through reporting setup and execution documentation review.
+> **Project status:** Iteration 25.11 completed.
 
-> This project is a hands-on learning and portfolio project focused on building a maintainable k6 performance-testing framework incrementally.
+> This project is a hands-on learning and portfolio project focused on progressively building a maintainable k6 API performance-testing framework, from test execution and metrics collection through automated analysis, regression detection, and CI/CD validation.
 
 ---
 
@@ -53,7 +53,6 @@ The framework currently supports:
 | **VS Code / GitHub Codespaces** | Development environment                |
 
 ---
-
 # 🚀 Key Features
 
 * k6 API performance testing
@@ -78,7 +77,15 @@ The framework currently supports:
 * Group-level validation
 * Endpoint-level thresholds
 * Business-level success metrics
-* Native k6 JSON reporting
+* Native k6 JSON result reporting
+* Automated performance result analysis
+* Scenario-aware analyzer thresholds
+* Version-controlled smoke baseline
+* Automated baseline comparison
+* Performance regression detection
+* CI performance quality gate
+* GitHub Actions CI/CD
+* Automated smoke performance execution
 * Structured test organization
 * Incremental framework development
 
