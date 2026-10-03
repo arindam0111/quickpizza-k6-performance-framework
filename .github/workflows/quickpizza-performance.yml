@@ -27,12 +27,21 @@ jobs:
       - name: Install k6
         uses: grafana/setup-k6-action@v1
 
-      - name: Run QuickPizza smoke test
+            - name: Run QuickPizza smoke test
         run: |
           k6 run --insecure-skip-tls-verify --out json=reports/smoke/ci-smoke-result.json tests/quickPizzaE2E.js
         env:
           TEST_SCENARIO: smoke_test
         continue-on-error: true
+
+      - name: Verify smoke report
+        run: |
+          echo "Checking reports directory..."
+          ls -la reports
+          echo "Checking smoke directory..."
+          ls -la reports/smoke
+          echo "Checking JSON report..."
+          test -f reports/smoke/ci-smoke-result.json
 
       - name: Upload k6 smoke report
         uses: actions/upload-artifact@v4
