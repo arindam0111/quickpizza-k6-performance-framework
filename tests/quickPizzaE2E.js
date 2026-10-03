@@ -21,6 +21,7 @@ import {
 import { getAuthHeaders } from '../utils/request.js';
 import { scenarios } from '../config/scenarios.js';
 import { thresholds } from '../config/thresholds.js';
+import { smokeThresholds } from '../config/smokeThresholds.js';
 import { ratingData } from '../data/testData.js';
 
 // ===============================
@@ -49,10 +50,14 @@ if (selectedScenario === 'smoke_test') {
     };
 }
 
+const selectedThresholds =
+    selectedScenario === 'smoke_test'
+        ? smokeThresholds
+        : thresholds;
+
 export const options = {
     scenarios: selectedScenarios,
-
-    thresholds: thresholds
+    thresholds: selectedThresholds
 };
 
 // ===============================
