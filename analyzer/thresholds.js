@@ -1,4 +1,4 @@
-const thresholds = [
+const smokeThresholds = [
     {
         metric: 'http_req_duration',
         operator: 'p95<',
@@ -33,7 +33,11 @@ const thresholds = [
         threshold: 0.98,
         summaryPath: ['reliability', 'loginSuccessRate', 'rate'],
         unit: 'rate'
-    },
+    }
+];
+
+const loadThresholds = [
+    ...smokeThresholds,
     {
         metric: 'successful_orders',
         operator: 'count>',
@@ -43,4 +47,7 @@ const thresholds = [
     }
 ];
 
-module.exports = thresholds;
+module.exports = {
+    smokeThresholds,
+    loadThresholds
+};

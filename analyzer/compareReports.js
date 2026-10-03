@@ -616,6 +616,11 @@ function main() {
     console.log(
         `Comparison report written to: ${comparisonPath}`
     );
+    if (regressions.length > 0) {
+        process.exitCode = 1;
+    } else {
+        process.exitCode = 0;
+    }
 }
 
 try {

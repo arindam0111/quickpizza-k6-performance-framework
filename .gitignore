@@ -1,3 +1,8 @@
 # k6 generated reports
 reports/*
 !reports/.gitkeep
+
+# Version-controlled performance baselines
+!reports/baselines/
+!reports/baselines/smoke/
+!reports/baselines/smoke/smoke-baseline-summary.json

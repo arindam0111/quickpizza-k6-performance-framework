@@ -1,0 +1,149 @@
+{
+  "report": {
+    "source": "reports\\smoke\\smoke-result.json",
+    "generatedAt": "2026-10-03T14:21:52.769Z"
+  },
+  "execution": {
+    "scenario": "smoke_test",
+    "vus": {
+      "min": 1,
+      "max": 1
+    },
+    "iterations": 3,
+    "httpRequests": 7
+  },
+  "reliability": {
+    "checks": {
+      "count": 13,
+      "rate": 1
+    },
+    "httpRequestFailed": {
+      "count": 7,
+      "rate": 0
+    },
+    "loginSuccessRate": {
+      "count": 1,
+      "rate": 1
+    }
+  },
+  "performance": {
+    "httpRequestDuration": {
+      "count": 7,
+      "avg": 302.02,
+      "min": 259.01,
+      "max": 416.02,
+      "p95": 392.02
+    },
+    "transactionTime": {
+      "count": 1,
+      "avg": 5254,
+      "min": 5254,
+      "max": 5254,
+      "p95": 5254
+    },
+    "iterationDuration": {
+      "count": 3,
+      "avg": 1832.44,
+      "min": 32,
+      "max": 5275.3,
+      "p95": 4766.77
+    }
+  },
+  "endpoints": {
+    "register": {
+      "count": 1,
+      "avg": 416.02,
+      "min": 416.02,
+      "max": 416.02,
+      "p95": 416.02
+    },
+    "login": {
+      "count": 1,
+      "avg": 336.02,
+      "min": 336.02,
+      "max": 336.02,
+      "p95": 336.02
+    },
+    "create_order": {
+      "count": 1,
+      "avg": 304.02,
+      "min": 304.02,
+      "max": 304.02,
+      "p95": 304.02
+    },
+    "get_order": {
+      "count": 1,
+      "avg": 259.01,
+      "min": 259.01,
+      "max": 259.01,
+      "p95": 259.01
+    },
+    "list_orders": {
+      "count": 1,
+      "avg": 263.01,
+      "min": 263.01,
+      "max": 263.01,
+      "p95": 263.01
+    },
+    "verify_order": {
+      "count": 1,
+      "avg": 269.02,
+      "min": 269.02,
+      "max": 269.02,
+      "p95": 269.02
+    },
+    "delete_order": {
+      "count": 1,
+      "avg": 267.02,
+      "min": 267.02,
+      "max": 267.02,
+      "p95": 267.02
+    }
+  },
+  "business": {
+    "successfulOrders": 1,
+    "scenarioExecutions": 1
+  },
+  "thresholds": [
+    {
+      "metric": "http_req_duration",
+      "operator": "p95<",
+      "threshold": 2000,
+      "actual": 392.02,
+      "status": "PASS",
+      "unit": "ms"
+    },
+    {
+      "metric": "http_req_failed",
+      "operator": "rate<",
+      "threshold": 0.05,
+      "actual": 0,
+      "status": "PASS",
+      "unit": "rate"
+    },
+    {
+      "metric": "checks",
+      "operator": "rate>",
+      "threshold": 0.95,
+      "actual": 1,
+      "status": "PASS",
+      "unit": "rate"
+    },
+    {
+      "metric": "transaction_time",
+      "operator": "p95<",
+      "threshold": 25000,
+      "actual": 5254,
+      "status": "PASS",
+      "unit": "ms"
+    },
+    {
+      "metric": "login_success_rate",
+      "operator": "rate>",
+      "threshold": 0.98,
+      "actual": 1,
+      "status": "PASS",
+      "unit": "rate"
+    }
+  ]
+}

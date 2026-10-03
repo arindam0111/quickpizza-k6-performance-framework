@@ -48,6 +48,13 @@ jobs:
         if: always()
         run: |
           node analyzer/analyzeReport.js reports/smoke/ci-smoke-result.json
+      
+      - name: Compare smoke test against baseline
+        if: success()
+        run: |
+          node analyzer/compareReports.js \
+            reports/baselines/smoke/smoke-baseline-summary.json \
+            reports/smoke/ci-smoke-summary.json
 
       - name: Upload k6 smoke reports
         if: always()
@@ -57,3 +64,4 @@ jobs:
           path: |
             reports/smoke/ci-smoke-result.json
             reports/smoke/ci-smoke-summary.json
+            reports/smoke/ci-smoke-comparison.json

@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const thresholds = require('./thresholds');
+const {
+    smokeThresholds,
+    loadThresholds
+} = require('./thresholds');
 
 const PERFORMANCE_METRICS = [
     'http_req_duration',
@@ -398,7 +401,14 @@ function evaluateThreshold(value, operator, threshold) {
 }
 
 function evaluateThresholds(summary) {
-    return thresholds.map((thresholdDefinition) => {
+    const scenario = summary.execution.scenario;
+
+    const selectedThresholds =
+        scenario === 'smoke_test'
+            ? smokeThresholds
+            : loadThresholds;
+
+    return selectedThresholds.map((thresholdDefinition) => {
         const actualValue = getNestedValue(
             summary,
             thresholdDefinition.summaryPath
