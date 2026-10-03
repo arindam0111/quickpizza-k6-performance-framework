@@ -431,7 +431,9 @@ function collectRegressions(comparison) {
 
     Object.keys(comparison.performance).forEach(
         (metricName) => {
-            if (metricName === 'iterationDuration') {
+            if (metricName === 'iterationDuration'||
+                metricName === 'transactionTime'
+                ) {
                 return;
             }
             const metricGroup =
