@@ -54,4 +54,4 @@ jobs:
           name: quickpizza-smoke-reports
           path: |
             reports/smoke/ci-smoke-result.json
-            reports/smoke/ci-smoke-result-summary.json
+            reports/smoke/ci-smoke-summary.json
